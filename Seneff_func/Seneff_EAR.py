@@ -18,7 +18,6 @@ def Seneff (input,sr,largo):
 
     y=input  
     y_rect=np.piecewise(y, [y<=0, y>0],[lambda y:np.exp(A*B*y), lambda y:1+A*np.arctan(B*y)])
-    plt.figure(figsize=(10,10))  
 
     #Ganancia usada en el modelo G=2.35
 
