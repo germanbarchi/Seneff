@@ -36,8 +36,7 @@ def Seneff (input,sr,largo):
     ua=((1/tau1)-(1/tau2))
     ub=(1/tau2)
     start_Cn = 0
-    display(ua,ub)
-
+    
     s=y_rect_amp
     largo=len(s)
     c= np.zeros(largo)
@@ -75,8 +74,7 @@ def Seneff (input,sr,largo):
     tauLP=0.04*0.001
     nLP=sr*tauLP
     alpha=math.exp(-1/nLP)
-    display(alpha)
-
+    
     import copy
 
     y_fil= np.zeros(largo)
