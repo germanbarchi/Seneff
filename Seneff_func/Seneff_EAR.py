@@ -91,7 +91,7 @@ def Seneff (input,sr,largo):
 
     # ETAPA DE COMPRESIÓN
 
-    def AGC(y_fil,sr,largo):
+  def AGC(y_fil,sr,largo):
 
       #Constantes del modelo 
     
@@ -115,7 +115,7 @@ def Seneff (input,sr,largo):
       div=1+KAGC*y_fil_AGC
       y_final=y_fil/div
     
-      return y_final
+    return y_final
 
 
   #Se invoca la función rectificación 
