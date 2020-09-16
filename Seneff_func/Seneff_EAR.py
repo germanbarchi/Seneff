@@ -16,7 +16,7 @@ def Seneff (input,sr,largo):
 
     #Función de rectificación Seneff
 
-    y=sound_norm  
+    y=input  
     y_rect=np.piecewise(y, [y<=0, y>0],[lambda y:np.exp(A*B*y), lambda y:1+A*np.arctan(B*y)])
     plt.figure(figsize=(10,10))  
 
@@ -121,7 +121,7 @@ def Seneff (input,sr,largo):
 
   #Se invoca la función rectificación 
 
-  y_rect_amp=rectificacion_seneff(sound_norm)
+  y_rect_amp=rectificacion_seneff(input)
 
   #Se invoca la función membrana (método de Euler)
 
