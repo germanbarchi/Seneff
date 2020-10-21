@@ -123,8 +123,7 @@ def Seneff (input,sr,largo):
   #Se invoca la función membrana (método de Euler)
 
   c,ua=membrana_Seneff(y_rect_amp,sr)
-  y_rect_amp=y_rect_amp.reshape(largo,)
-    
+      
   flow=np.subtract(y_rect_amp,c)
 
   flow_ua=np.multiply(ua,flow)
