@@ -16,9 +16,8 @@ def Seneff (input,sr,largo):
 
     #Función de rectificación Seneff
 
-    y=sound_norm  
+    y=input  
     y_rect=np.piecewise(y, [y<=0, y>0],[lambda y:np.exp(A*B*y), lambda y:1+A*np.arctan(B*y)])
-    plt.figure(figsize=(10,10))  
 
     #Ganancia usada en el modelo G=2.35
 
@@ -37,8 +36,7 @@ def Seneff (input,sr,largo):
     ua=((1/tau1)-(1/tau2))
     ub=(1/tau2)
     start_Cn = 0
-    display(ua,ub)
-
+    
     s=y_rect_amp
     largo=len(s)
     c= np.zeros(largo)
@@ -76,8 +74,7 @@ def Seneff (input,sr,largo):
     tauLP=0.04*0.001
     nLP=sr*tauLP
     alpha=math.exp(-1/nLP)
-    display(alpha)
-
+    
     import copy
 
     y_fil= np.zeros(largo)
@@ -92,42 +89,41 @@ def Seneff (input,sr,largo):
 
     # ETAPA DE COMPRESIÓN
 
-    def AGC(y_fil,sr,largo):
+  def AGC(y_fil,sr,largo):
 
-      #Constantes del modelo 
+    #Constantes del modelo 
     
-      tauAGC=3*0.001
-      nAGC=sr*tauAGC
-      alphaAGC=math.exp(-1/nAGC)
-      KAGC=0.002
-      display(alphaAGC)
-
-      #Output de la etapa de adaptación filtrados con el filtro de primer orden 
-
-      y_fil_AGC= np.zeros(largo)
-      y_fil_AGC[0]=0.23071276
-      for i in range (1,largo):
-
-        y_fil_AGC[i]=(1-alphaAGC)*y_fil[i]+y_fil_AGC[i-1]*alphaAGC
-
-      #Modelo AGC 
-
-      y_final=np.zeros(largo)
-      div=1+KAGC*y_fil_AGC
-      y_final=y_fil/div
+    tauAGC=3*0.001
+    nAGC=sr*tauAGC
+    alphaAGC=math.exp(-1/nAGC)
+    KAGC=0.002
     
-      return y_final
+    #Output de la etapa de adaptación filtrados con el filtro de primer orden 
+
+    y_fil_AGC= np.zeros(largo)
+    y_fil_AGC[0]=0.23071276
+    
+    for i in range (1,largo):
+
+      y_fil_AGC[i]=(1-alphaAGC)*y_fil[i]+y_fil_AGC[i-1]*alphaAGC
+
+    #Modelo AGC 
+
+    y_final=np.zeros(largo)
+    div=1+KAGC*y_fil_AGC
+    y_final=y_fil/div
+    
+    return y_final
 
 
   #Se invoca la función rectificación 
 
-  y_rect_amp=rectificacion_seneff(sound_norm)
+  y_rect_amp=rectificacion_seneff(input)
 
   #Se invoca la función membrana (método de Euler)
 
   c,ua=membrana_Seneff(y_rect_amp,sr)
-  y_rect_amp=y_rect_amp.reshape(largo,)
-    
+      
   flow=np.subtract(y_rect_amp,c)
 
   flow_ua=np.multiply(ua,flow)
