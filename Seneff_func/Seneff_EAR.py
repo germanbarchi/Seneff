@@ -143,7 +143,7 @@ def Seneff (input,sr,largo):
 def envolvente_temporal(canal_x,fs):
 
   import scipy.signal 
-
+  import numpy as np
   fc=300
   f_norm=fc/(0.5*fs)
 
