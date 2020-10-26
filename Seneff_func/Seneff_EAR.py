@@ -142,4 +142,39 @@ def Seneff (input,sr,largo):
   y_final=AGC(y_fil,sr,largo)
 
   return y_final
+  
 
+def envolvente_temporal(canal_x,fs):
+
+  import scipy.signal 
+
+  fc=300
+  f_norm=fc/(0.5*fs)
+
+  canal_rect=np.abs(canal_x)
+
+  b,a=scipy.signal.cheby2(6,40,f_norm, btype='low', analog=False, output='ba', fs=None)
+  envolvente = scipy.signal.filtfilt(b,a, canal_rect)
+
+  return envolvente
+
+def envolvente_rate(respuesta_Seneff,winsize,hopsize):
+
+  import numpy as np
+  fin=len(respuesta_Seneff)-winsize
+  rate_filtrado = [np.max(respuesta_Seneff[i:i+winsize]) for i in range(0,fin,hopsize)]
+  
+  return rate_filtrado
+
+#variante del codigo 
+
+  #rate_filtrado=[]
+  #max_i=np.trunc((len(respuesta_Seneff)-winsize)/(hopsize-1))
+  #max_i_int=np.int(max_i)
+  #display(max_i_int)
+  #for i in range (0,max_i_int):
+    #a=i*(hopsize-1)
+    #b=a+winsize
+    #rate_filtrado.append(np.max(respuesta_Seneff[a:b]))
+
+  #return rate_filtrado
