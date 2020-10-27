@@ -174,3 +174,17 @@ def envolvente_rate(respuesta_Seneff,winsize,hopsize):
     #rate_filtrado.append(np.max(respuesta_Seneff[a:b]))
 
   #return rate_filtrado
+
+def padding (x,corte):  
+
+  largo_audio=len(x)
+
+  if largo_audio<corte:
+    
+    padding= corte-largo_audio
+    x_pad=np.pad(x,(0,padding),'constant',constant_values=0)   
+    
+  else: 
+    x_pad=x[:corte]
+
+  return x_pad
