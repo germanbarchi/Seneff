@@ -176,7 +176,7 @@ def envolvente_rate(respuesta_Seneff,winsize,hopsize):
   #return rate_filtrado
 
 def padding (x,corte):  
-
+  import numpy as np
   largo_audio=len(x)
 
   if largo_audio<corte:
