@@ -160,9 +160,9 @@ def envolvente_rate(respuesta_Seneff,winsize,hopsize,downsampling_factor):
   import scipy.signal
 
   
-  def downsample(respuesta_Seneff,q):
+  def downsample(rate_filtrado,q):
   
-    downsample=scipy.signal.decimate(respuesta_Seneff,downsampling_factor, n=None, ftype='iir', axis=- 1, zero_phase=True)
+    downsample=scipy.signal.decimate(rate_filtrado,downsampling_factor, n=None, ftype='iir', axis=- 1, zero_phase=True)
 
     return downsample
   
