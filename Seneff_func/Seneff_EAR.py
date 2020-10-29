@@ -158,7 +158,8 @@ def envolvente_temporal(canal_x,fs,downsampling_factor):
   b,a=scipy.signal.cheby2(6,40,f_norm, btype='low', analog=False, output='ba', fs=None)
   envolvente = scipy.signal.filtfilt(b,a, canal_rect)
   envolvente_downsampled=downsample(envolvente,downsampling_factor)
-  return envolvente
+  
+  return envolvente,envolvente_downsampled
 
 def envolvente_rate(respuesta_Seneff,winsize,hopsize,downsampling_factor):
 
