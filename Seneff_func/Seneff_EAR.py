@@ -161,7 +161,7 @@ def envolvente_temporal(canal_x,fs,downsampling_factor):
   
   return envolvente,envolvente_downsampled
 
-def envolvente_rate(respuesta_Seneff,winsize,hopsize,downsampling_factor):
+def envolvente_rate(respuesta_Seneff,winsize,hopsize):
 
   import numpy as np 
   
