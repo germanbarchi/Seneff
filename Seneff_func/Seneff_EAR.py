@@ -154,13 +154,23 @@ def envolvente_temporal(canal_x,fs):
 
   return envolvente
 
-def envolvente_rate(respuesta_Seneff,winsize,hopsize):
+def envolvente_rate(respuesta_Seneff,winsize,hopsize,downsampling_factor):
 
   import numpy as np
+  import scipy.signal
+
+  
+  def downsample(respuesta_Seneff,q):
+  
+    downsample=scipy.signal.decimate(respuesta_Seneff,downsampling_factor, n=None, ftype='iir', axis=- 1, zero_phase=True)
+
+    return downsample
+  
   fin=len(respuesta_Seneff)-winsize
   rate_filtrado = [np.max(respuesta_Seneff[i:i+winsize]) for i in range(0,fin,hopsize)]
-  
-  return rate_filtrado
+  rate_downsample=downsample(rate_filtrado,downsampling_factor)
+
+  return rate_filtrado,rate_downsample
 
 #variante del codigo 
 
