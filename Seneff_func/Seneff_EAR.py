@@ -140,37 +140,34 @@ def Seneff (input,sr,largo):
   return y_final
   
 
-def envolvente_temporal(canal_x,fs):
+def envolvente_temporal(canal_x,fs,downsampling_factor):
 
   import scipy.signal 
   import numpy as np
+  
+  def downsample(envolvente,q):
+  
+    downsample=scipy.signal.decimate(envolvente,q, n=None, ftype='iir', axis=- 1, zero_phase=True)
+
+    return downsample
+
   fc=300
   f_norm=fc/(0.5*fs)
 
   canal_rect=np.abs(canal_x)
-
   b,a=scipy.signal.cheby2(6,40,f_norm, btype='low', analog=False, output='ba', fs=None)
   envolvente = scipy.signal.filtfilt(b,a, canal_rect)
-
+  envolvente_downsampled=downsample(envolvente,downsampling_factor)
   return envolvente
 
 def envolvente_rate(respuesta_Seneff,winsize,hopsize,downsampling_factor):
 
-  import numpy as np
-  import scipy.signal
-
-  
-  def downsample(rate_filtrado,q):
-  
-    downsample=scipy.signal.decimate(rate_filtrado,downsampling_factor, n=None, ftype='iir', axis=- 1, zero_phase=True)
-
-    return downsample
+  import numpy as np 
   
   fin=len(respuesta_Seneff)-winsize
   rate_filtrado = [np.max(respuesta_Seneff[i:i+winsize]) for i in range(0,fin,hopsize)]
-  rate_downsample=downsample(rate_filtrado,downsampling_factor)
-
-  return rate_filtrado,rate_downsample
+  
+  return rate_filtrado
 
 #variante del codigo 
 
